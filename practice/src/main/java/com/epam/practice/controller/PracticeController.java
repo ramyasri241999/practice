@@ -41,4 +41,6 @@ public class PracticeController{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new CustomerResponse());
 	}
 	
+	
+	
 }

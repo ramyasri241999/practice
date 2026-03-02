@@ -113,3 +113,58 @@ class Tiger extends Animal{
 		System.out.println("Tiger Cost is ::");   //we increased the visibility and also covariant parameters
 	}
 }
+
+
+abstract class AbstractExample{
+	
+	protected String name ;
+	
+public AbstractExample(String name) {
+		this.name = name;
+		System.out.println("Inside Abstract example constructor");
+	}
+	
+	public abstract void print() ;  //must implement
+	
+	void call() {
+		System.out.println(""); //already implemented
+	}
+	
+	 // 🔹 Final Method (cannot override)
+    public final void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+
+    // 🔹 Static Method (belongs to class)
+    public static void info() {
+        System.out.println("Animals are living beings");
+    }
+}
+
+interface CompleteInterface {
+
+    // implicitly: public static final
+    int CONSTANT_VALUE = 100;
+
+    String NAME = "InterfaceDemo";
+
+    // implicitly: public abstract
+    void abstractMethod();
+
+    default void defaultMethod() {
+        System.out.println("Inside default method");
+        privateHelper();
+    }
+
+    static void staticMethod() {
+        System.out.println("Inside static method");
+        privateStaticHelper();
+    }
+
+    private void privateHelper() {
+        System.out.println("Private instance helper");
+    }
+    private static void privateStaticHelper() {
+        System.out.println("Private static helper");
+    }
+}

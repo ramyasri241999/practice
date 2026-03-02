@@ -103,9 +103,14 @@ public class PracticeApplication {
 		
 		Map<String,List<String>> GroupEmailNames = empList.stream().collect(Collectors.groupingBy(emp -> emp.getEmail().substring(emp.getEmail().indexOf('@')+1),Collectors.mapping(Employee::getName, Collectors.toList())));
 		System.out.println("Group emails names "+ GroupEmailNames); //Group emails {outlook.com=[Melanie, Ali], gmail.com=[Yanksha, Ramesh, Padma, Uzma, Ram], yahoo.com=[Francesca, Milad, Shiva]}
+		
+		
+		
+		
 		//string related
 		String str="Ramya";
 		String sentence = "Ramya is a good girl but not a good girlfriend";
+		String[] splitSentence = sentence.trim().split("\\s+"); // for extra spaces like "Ramya    is good   girl" -- Ramya,sri,lakshmi,sunkara
 		
 		String distinct= str.chars().mapToObj(c->(char)c).distinct().map(String::valueOf).collect(Collectors.joining());
 		System.out.println("distinct string "+ distinct); //Ramy
@@ -114,11 +119,12 @@ public class PracticeApplication {
 		Map<String, Long> wordCount= Arrays.stream(sentence.split(" ")).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 		System.out.println(" sentence "+ wordCount);//{but=1, girlfriend=1, a=2, not=1, Ramya=1, is=1, girl=1, good=2}
 
-		Character repeatChar = str.chars().mapToObj(c->(char)c).collect(Collectors.groupingBy(Function.identity(),Collectors.counting())).entrySet().stream().filter(e->e.getValue()>1).map(Map.Entry::getKey).findFirst().orElse(null);
+		Character repeatChar = str.chars().mapToObj(c->(char)c).collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting())).entrySet().stream().filter(e->e.getValue()>1).map(Map.Entry::getKey).findFirst().orElse(null);
 		System.out.println(" repeatChar "+ repeatChar);//a
 		String longWord= Arrays.stream(sentence.split(" ")).max(Comparator.comparingInt(String::length)).orElse("No word");
 		System.out.println(" longWord "+ longWord);//girlfriend
-
+ 
+		
 		String secondLongWord = Arrays.stream(sentence.split(" ")).sorted(Comparator.comparingInt(String::length).reversed()).skip(1).findFirst().orElse("Not Found");
 		System.out.println(" secondLongWord "+ secondLongWord);//Ramya
 		Map<String, Long> vowelCountOfEachWord = Arrays.stream(sentence.split(" ")).distinct().collect(Collectors.toMap(Function.identity(), word-> word.chars().filter(c-> "aeiou".indexOf(c)!= -1).count()));
@@ -189,6 +195,8 @@ public class PracticeApplication {
 		System.out.println("anagrams "+ anagrams);  //[[flower, flowre], [flowing]]
 
 		String[] words = {"ramya","sri","lakshmi","Ramya","sri"};
+		
+		
 		List<String> wordsBasedOnLength = Arrays.stream(words).sorted(Comparator.comparing(String::length)).collect(Collectors.toList());
 		System.out.println("wordsBasedOnLength "+ wordsBasedOnLength); //wordsBasedOnLength  [sri, sri, ramya, Ramya, lakshmi]
 
@@ -218,6 +226,35 @@ public class PracticeApplication {
 		List<Integer> onlyNumbers= Arrays.stream(alphaNumbers).filter(s->s.chars().allMatch(Character::isDigit)).map(Integer::valueOf).toList();
 		
 		System.out.println("Only numbers" +onlyNumbers);
+		
+		
+		  String[][] scores = {
+			        {"Bobby", "87"},
+			        {"Charles", "100"},
+			        {"Eric", "64"},
+			        {"Charles", "22"},
+			        {"Bobby", "94"},
+			        {"Eric", "-10"},
+			        {"David", "50"},
+			        {"David", "70"}
+			};
+		
+		Map<String , Double> avgScore = Arrays.stream(scores).collect(Collectors.groupingBy(score -> score[0], Collectors.averagingInt(score -> Integer.parseInt(score[1]))));
+		System.out.println("avg score :: "+avgScore);
+		int maxAvgScore = avgScore.values().stream().max(Double::compareTo).map(s-> (int)Math.floor(s)).orElse(0);
+		System.out.println(" max avg score :: "+maxAvgScore);
+		String[] logs = {
+			    "192.168.1.10 - - [10/Jan/2026:10:01:10 +0530] \"GET /home HTTP/1.1\" 200",
+			    "192.168.1.11 - - [10/Jan/2026:10:01:20 +0530] \"GET /login HTTP/1.1\" 200",
+			    "192.168.1.10 - - [10/Jan/2026:10:02:10 +0530] \"GET /profile HTTP/1.1\" 200",
+			    "192.168.1.12 - - [10/Jan/2026:10:03:10 +0530] \"GET /about HTTP/1.1\" 200"
+			};
+		
+		Arrays.stream(logs).findFirst().map(s-> s.substring(0, 13)).toString();
+		
+		
+		
+		
 		
 		
 		//int[] related issues
@@ -267,6 +304,171 @@ public class PracticeApplication {
 		
 		String maxPossibleNum =Arrays.stream(duplicateNums).mapToObj(String::valueOf).sorted((a,b)-> (b+a).compareTo(a+b)).collect(Collectors.joining());
 		System.out.println("max possible Num "+maxPossibleNum);
+		
+		
+		
+		//list stream
+		
+		List<String> listOfWords = Arrays.asList("ramya","sri","lakshmi");
+		List<String> captialised = listOfWords.stream().map(word->word.substring(0,1).toUpperCase()+word.substring(1)).distinct().toList();
+		System.out.println("captialised "+ captialised);
+		List<Integer> listNums = Arrays.asList(2,4,23,4,7,4,8);
+		Predicate<Integer> isEven = num -> num%2==0;
+		Function<Integer,Integer> prod = num -> num*num;
+		List<Integer> squareofEven = listNums.stream().filter(isEven).map(prod).toList();
+		System.out.println("Squares of even number "+ squareofEven);
+		
+		
+		
+		
 	}
+	
+	public static int trap(int[] height) {  // water trap problem
+
+	    if (height == null || height.length == 0) {
+	        return 0;
+	    }
+
+	    int left = 0;
+	    int right = height.length - 1;
+	    int leftMax = 0;
+	    int rightMax = 0;
+	    int water = 0;
+
+	    while (left < right) {
+
+	        if (height[left] < height[right]) {
+
+	            if (height[left] >= leftMax) {
+	                leftMax = height[left];
+	            } else {
+	                water += leftMax - height[left];
+	            }
+
+	            left++;
+
+	        } else {
+
+	            if (height[right] >= rightMax) {
+	                rightMax = height[right];
+	            } else {
+	                water += rightMax - height[right];
+	            }
+
+	            right--;
+	        }
+	    }
+
+	    return water;
+	}
+	
+	
+	public static int maximumGap(int[] nums) {
+	    if (nums == null || nums.length < 2) {
+	        return 0;
+	    }
+
+	    Arrays.sort(nums);
+
+	    int maxGap = 0;
+
+	    for (int i = 1; i < nums.length; i++) {
+	        maxGap = Math.max(maxGap, nums[i] - nums[i - 1]);
+	    }
+
+	    return maxGap;
+	}
+	
+	
+	public static void nextHighestNumber() {
+
+        int[] arr = {15, 10, 16, 20, 8, 9, 7, 50};
+
+        Stack<Integer> stack = new Stack<>();
+        Map<Integer, Integer> result = new HashMap<>();
+
+        for (int num : arr) {
+
+            while (!stack.isEmpty() && num > stack.peek()) {
+                result.put(stack.pop(), num);
+            }
+
+            stack.push(num);
+        }
+
+        // Remaining elements have no greater element
+        while (!stack.isEmpty()) {
+            result.put(stack.pop(), -1);
+        }
+	}
+	
+	 public static void secondHighest(){  //second highest
+	        
+	       int[] arr = {1, 7 ,5,6,9,8,10,24,21,26,28};
+	       int highest=Integer.MIN_VALUE, second=Integer.MIN_VALUE;
+	        for (int i: arr){
+	            if(i>highest){
+	                second = highest;
+	                highest = i;
+	            }
+	            else if(i>second && second!=highest){
+	                second = i;
+	            }
+	        }
+	       System.out.println("second "+ second);
+	    }
+	 
+	   public static int findMin(int[] nums) {  // minimum number in rotated array follow a binary search
+
+	        int left = 0;
+	        int right = nums.length - 1;
+
+	        while (left < right) {
+
+	            int mid = left + (right - left) / 2;
+
+	            // If mid element is greater than right element,
+	            // minimum must be in right half
+	            if (nums[mid] > nums[right]) {
+	                left = mid + 1;
+	            }
+	            // Otherwise minimum is in left half (including mid)
+	            else {
+	                right = mid;
+	            }
+	        }
+
+	        return nums[left];
+	    }
+
+	   public static int[] trackPosition(String moves) { // input : "UDLR" output : [0,0]
+
+	        int x = 0;
+	        int y = 0;
+
+	        for (char move : moves.toCharArray()) {
+
+	            switch (move) {
+	                case 'U':
+	                    y++;
+	                    break;
+	                case 'D':
+	                    y--;
+	                    break;
+	                case 'R':
+	                    x++;
+	                    break;
+	                case 'L':
+	                    x--;
+	                    break;
+	                default:
+	                    // ignore invalid characters
+	            }
+	        }
+
+	        return new int[]{x, y};
+	    }
+
+
  
 }
