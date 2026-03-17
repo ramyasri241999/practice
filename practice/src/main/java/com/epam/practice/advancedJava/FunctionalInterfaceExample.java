@@ -52,7 +52,8 @@ public class FunctionalInterfaceExample {
 @FunctionalInterface
 interface Calculator{
 	
-	int add(int a, int b);  
+	int add(int a, int b);
+	//int subtract(int a, int b);
 	//void sub(int a , int b);   // if no @FunctionalInterface this method wont give any compilation error. If annotated -- Calculator is not a functional interface
 // can have static, private, and default methods
 	

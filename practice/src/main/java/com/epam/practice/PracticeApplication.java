@@ -306,7 +306,6 @@ public class PracticeApplication {
 		System.out.println("max possible Num "+maxPossibleNum);
 		
 		
-		
 		//list stream
 		
 		List<String> listOfWords = Arrays.asList("ramya","sri","lakshmi");

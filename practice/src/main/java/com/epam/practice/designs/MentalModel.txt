@@ -1,0 +1,165 @@
+Design patterns are grouped into 3 categories.
+
+1️⃣ Creational  → Object creation
+2️⃣ Structural  → Object composition
+3️⃣ Behavioral  → Object communication
+1️⃣ Creational Patterns (5)
+
+Goal: How objects are created
+
+Memory trick:
+
+FACTORY BUILDS PROTOTYPES WITH A SINGLETON BUILDER
+Pattern	Idea
+Factory Method	Subclass decides which object to create
+Abstract Factory	Create families of related objects
+Builder	Construct complex object step by step
+Prototype	Clone existing object
+Singleton	Only one instance
+
+Example mapping in real Java:
+
+Singleton → Logger, Spring Beans
+Builder → StringBuilder, Lombok @Builder
+Factory → Spring BeanFactory
+Prototype → clone()
+Abstract Factory → UI theme libraries
+
+Visual idea:
+
+Client → Factory → Object
+2️⃣ Structural Patterns (7)
+
+Goal: How objects are combined to form larger structures
+
+Memory trick:
+
+ADAPTER BRIDGES COMPOSITE DECORATORS WITH A FACADE,
+WHILE PROXY AND FLYWEIGHT OPTIMIZE ACCESS
+Pattern	Idea
+Adapter	Convert interface
+Bridge	Separate abstraction from implementation
+Composite	Tree structure (part-whole hierarchy)
+Decorator	Add behavior dynamically
+Facade	Simplified interface
+Flyweight	Memory optimization
+Proxy	Control access
+
+Real Java examples:
+
+Adapter → Spring MVC HandlerAdapter
+Decorator → Java IO streams
+Facade → Spring JdbcTemplate
+Proxy → Spring AOP proxies
+Composite → File system tree
+Flyweight → String pool
+Bridge → JDBC drivers
+
+Mental picture:
+
+Client → Facade → Complex subsystem
+3️⃣ Behavioral Patterns (11)
+
+Goal: How objects interact
+
+Memory trick sentence:
+
+STRATEGIC OBSERVERS FOLLOW TEMPLATE CHAINS,
+COMMANDING STATES THROUGH MEDIATORS,
+ITERATING MEMORIES VISITED BY INTERPRETERS
+Pattern	Idea
+Strategy	Switch algorithms
+Observer	Publish–subscribe
+Template Method	Algorithm skeleton
+Chain of Responsibility	Pass request along chain
+Command	Encapsulate request
+State	Change behavior based on state
+Mediator	Central communication
+Iterator	Traverse collection
+Memento	Save state snapshot
+Visitor	Add operations
+Interpreter	Evaluate expressions
+
+Real Java examples:
+
+Strategy → Comparator
+Observer → Spring Events
+Template Method → JdbcTemplate
+Chain → Servlet Filters
+Command → Runnable
+State → Order workflow
+Mediator → DispatcherServlet
+Iterator → Java Collections
+Memento → Undo systems
+Visitor → FileVisitor
+Interpreter → SpEL
+4️⃣ Ultimate Memory Map
+
+The whole GoF patterns tree:
+
+Design Patterns
+│
+├─ Creational (create objects)
+│   ├ Factory
+│   ├ Abstract Factory
+│   ├ Builder
+│   ├ Prototype
+│   └ Singleton
+│
+├─ Structural (structure objects)
+│   ├ Adapter
+│   ├ Bridge
+│   ├ Composite
+│   ├ Decorator
+│   ├ Facade
+│   ├ Flyweight
+│   └ Proxy
+│
+└─ Behavioral (object behavior)
+    ├ Strategy
+    ├ Observer
+    ├ Template
+    ├ Chain
+    ├ Command
+    ├ State
+    ├ Mediator
+    ├ Iterator
+    ├ Memento
+    ├ Visitor
+    └ Interpreter
+5️⃣ Fastest Interview Trick
+
+Instead of memorizing 23 patterns, remember 3 questions:
+
+How is object created?
+→ Creational
+
+How are objects structured?
+→ Structural
+
+How do objects communicate?
+→ Behavioral
+6️⃣ Even Easier 23-Pattern Sentence
+
+Memorize this:
+
+Factories build prototypes with a singleton builder.
+Adapters bridge composites decorated by facades,
+while proxies and flyweights optimize structure.
+Strategies observe template chains,
+commanding states through mediators,
+iterating memories visited by interpreters.
+7️⃣ The Real Interview Insight
+
+Interviewers rarely ask definitions.
+They ask where patterns appear in real systems.
+
+Examples:
+
+Spring → Factory + Proxy + Template
+Java Collections → Iterator
+ExecutorService → Command
+Spring Events → Observer
+Security Filters → Chain of Responsibility
+
+Knowing where they appear is more important than definitions.

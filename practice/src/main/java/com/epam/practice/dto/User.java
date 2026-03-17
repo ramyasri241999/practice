@@ -18,7 +18,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-
+/*
+ * One to One relationship: A one-to-one relationship is a type of association where each entity in one table is associated with exactly one entity in another table, and vice versa. 
+ * In a one-to-one relationship, each record in the first table corresponds to exactly one record in the second table,
+ *  and each record in the second table corresponds to exactly one record in the first table.
+ *  User and userprofile have a one-to-one relationship. Each user has one user profile, and each user profile belongs to one user.
+ *  In the class where foriegn key is present, we will use @JoinColumn annotation to specify the foreign key column. This is called owning side of the relationship.
+ *  In the other class, we will use mappedBy attribute to specify the relationship.
+ */
 @Entity
 @Table(name = "users")
 public class User {

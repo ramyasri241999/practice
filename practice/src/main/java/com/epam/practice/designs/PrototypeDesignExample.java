@@ -2,7 +2,7 @@ package com.epam.practice.designs;
 
 import java.util.HashMap;
 import java.util.Map;
-
+//Creates new objects by copying an existing object instead of creating from scratch.
 public class PrototypeDesignExample {
 	
 	public static void main(String[] args) throws CloneNotSupportedException {

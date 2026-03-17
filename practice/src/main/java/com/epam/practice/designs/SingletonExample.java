@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class SingletonExample {
 	
-	
+	//Definition: Ensures that only one instance of a class exists and provides a global access point to it.
 	
 	public static void main(String[] args) throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
@@ -16,6 +16,7 @@ public class SingletonExample {
 		System.out.println("Reflection Attack");
 		System.out.println(s1 == s2);  // false -- singleton attacked
 		
+		Singleton s3 = Singleton.getInstance();
 		
 		}
 
@@ -30,7 +31,7 @@ class Singleton{
 		}
 	}
 	public static Singleton getInstance() {
-		if(instance == null) {
+		if(instance == null) { // why another if check? because if we don't check for null before acquiring the lock, then every time we call getInstance() method, it will acquire the lock and check for null, which is unnecessary and can lead to performance issues. By adding the null check before acquiring the lock, we can avoid unnecessary synchronization and improve performance.
 			synchronized(Singleton.class){			// class level lock. it will always check for the lock so added above null check
 				if(instance == null) {
 					instance = new Singleton();
