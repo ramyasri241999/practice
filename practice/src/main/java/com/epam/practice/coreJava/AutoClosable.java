@@ -1,9 +1,16 @@
 package com.epam.practice.coreJava;
 
 import java.io.Closeable;
+
 import java.io.IOException;
 
-public class AutoClosable implements Closeable{
+/*
+ * AutoCloseable is an interface in Java that provides a mechanism for automatic resource management.
+ * 	It is used in conjunction with the try-with-resources statement, which ensures that resources are closed automatically after they are no longer needed.
+ * 
+ */
+
+public class AutoClosable implements Closeable{ 
 
 	@Override
 	public void close() throws IOException {

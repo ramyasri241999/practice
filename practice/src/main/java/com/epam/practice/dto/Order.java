@@ -2,7 +2,12 @@ package com.epam.practice.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,64 +15,130 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-/*
- * One to many relationship: A one-to-many relationship is a type of association where one entity in a table can be associated with multiple entities in another table, 
- * but each entity in the second table is associated with only one entity in the first table.
- * ex: An order can have multiple order items, but each order item belongs to only one order.
- * here orderitems is owning side of the relationship because it contains the foreign key to the order table. 
- * We will use @JoinColumn annotation in the orderitems class to specify the foreign key column.
- * on the owning side we use @ManyToOne annotation to specify the relationship, and on the non-owning side we use @OneToMany annotation with mappedBy attribute to specify the relationship.
- * In a one-to-many relationship, the entity on the "one" side is often referred to as the "parent" entity, while the entities on the "many" side are referred to as "child" entities.
- */
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 public class Order {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="order_number", nullable=false, unique = true)
-	private String orderNumber;
-	
-	@Column(name="order_date",nullable = false)
-	private LocalDateTime orderDate;
-	
-	@Column(name="total_amount", nullable = false)
-	private BigDecimal totalAmount;
-	
-	@Column(nullable= false)
-	private String status;
-	
-	@OneToMany(mappedBy="order",cascade= CascadeType.ALL,orphanRemoval=true,fetch=FetchType.LAZY)
-	private List<OrderItem> orderItems;
 
-}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Entity
-@Table(name="order_items")
-class OrderItem{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="product_name", nullable=false)
-	private String productName;
-	
-	@Column(nullable=false)
-	private int quantity;
-	
-	@Column(nullable=false)
-	private BigDecimal price;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name ="order_id",nullable=false)
-	private Order order;
+    @Column(name = "order_number", nullable = false, unique = true)
+    private String orderNumber;
+
+    @Column(name = "order_date", nullable = false)
+    private LocalDateTime orderDate;
+
+    @Column(name = "total_amount", nullable = false)
+    private BigDecimal totalAmount;
+
+    @Column(nullable = false)
+    private String status;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public Order() {
+        // JPA
+    }
+
+    public Order(String orderNumber, LocalDateTime orderDate, BigDecimal totalAmount, String status) {
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.status = status;
+    }
+
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems.clear();
+        if (orderItems != null) {
+            for (OrderItem item : orderItems) {
+                addOrderItem(item);
+            }
+        }
+    }
+
+    // helper methods to keep both sides in sync
+    public void addOrderItem(OrderItem item) {
+        if (item == null) return;
+        item.setOrder(this);
+        this.orderItems.add(item);
+    }
+
+    public void removeOrderItem(OrderItem item) {
+        if (item == null) return;
+        // remove and clear relationship
+        Iterator<OrderItem> it = this.orderItems.iterator();
+        while (it.hasNext()) {
+            OrderItem current = it.next();
+            if (current.equals(item) || (current.getId() != null && current.getId().equals(item.getId()))) {
+                it.remove();
+                current.setOrder(null);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

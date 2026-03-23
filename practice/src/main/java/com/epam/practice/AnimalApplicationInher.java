@@ -33,15 +33,25 @@ public class AnimalApplicationInher {
 		
 		Animal ani = new Tiger();
 		//ani.isWild();  isWild has no visability 
-		ani.cost(new Object());
+		ani.cost(new Object());// prints Animal Cost is ::  -- calls animal method because it has object
 		ani.cost("Hello"); // this is not overridding but overloading so decides at the compile time -- calls animal method because it has object
+		//the cost method in tiger class is not overriding the cost method in animal class because it has different parameters, so it is overloading the cost method in animal class, and since the reference type is Animal, it will call the cost method in animal class for both calls.
+		
 		
 		Tiger t = new Tiger();
 		Tiger.eat(); // Tiger eats
 		System.out.println("is wild:: "+t.isWild()); //true
 		t.live(); //Animal lives
-		t.cost(new Object());
-		t.cost("Hi");  
+		t.cost(new Object());  // prints Animal Cost is ::  -- calls animal method because it has object
+		t.cost("Hi");  // prints Tiger Cost is ::  -- calls tiger method because it has String.does protected access modifier allows access within the same package 
+		//and also allows access to subclasses, so the cost method in tiger class can be accessed by the tiger class and also by the animal class since it is a subclass of animal class, but it cannot be accessed by any other class that is not a subclass of animal class or is not in the same package.
+	
+	
+		CompleteInterfaceImpl impl = new CompleteInterfaceImpl();
+		impl.abstractMethod(); //Implementing abstract method
+	
+		AbstractExampleImpl abstractExample = new AbstractExampleImpl("Abstract Example");
+		abstractExample.print(); //Name: Abstract Example
 	}
 }
 
@@ -141,6 +151,21 @@ public AbstractExample(String name) {
     }
 }
 
+class AbstractExampleImpl extends AbstractExample{
+
+	public AbstractExampleImpl(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+		
+	}
+
+	@Override
+	public void print() {
+		System.out.println("Name: " + name);
+		
+	}
+	
+}
 interface CompleteInterface {
 
     // implicitly: public static final
@@ -167,4 +192,18 @@ interface CompleteInterface {
     private static void privateStaticHelper() {
         System.out.println("Private static helper");
     }
+}
+
+class CompleteInterfaceImpl implements CompleteInterface {
+	int CONSTANT_VALUE = 200; // this is not overriding the interface variable since it is static and final, so it is a new variable in the class that has the same name as the interface variable, but it is not related to the interface variable, and it can have a different value than the interface variable.
+// remaining method of the interface must be implemented since it is not a default method and also not a static method, and it is not a private method, so it must be implemented by the class that implements the interface.
+	@Override
+	public void abstractMethod() {
+		System.out.println("Implementing abstract method");
+		System.out.println("Constant value from interface: " + CompleteInterface.CONSTANT_VALUE); // Accessing the constant value from the interface using the interface name since it is static and final, and it cannot be accessed using the instance of the class that implements the interface since it is not inherited by the class, but it can be accessed using the interface name.
+		System.out.println("Constant value from class: " + CONSTANT_VALUE); // Accessing the constant value from the class using the instance of the class since it is a new variable in the class that has the same name as the interface variable, but it is not related to the interface variable, and it can have a different value than the interface variable.
+		System.out.println("Name from interface: " + CompleteInterface.NAME); // Accessing the name from the interface using the interface name since it is static and final, and it cannot be accessed using the instance of the class that implements the interface since it is not inherited by the class, but it can be accessed using the interface name.
+		//System.out.println("Name from class: " + NAME); // Accessing the name from the class using the instance of the class since it is
+	}
+	
 }

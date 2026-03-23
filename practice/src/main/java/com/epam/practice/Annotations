@@ -1,0 +1,91 @@
+********************Annotations********************	
+
+@component: Define a component. The component is a reusable piece of code that can be used in different parts of the application.
+@configuration: Define a configuration class. A configuration class is a class that contains bean definitions and other configuration settings for the application.
+@SpringBootApplication: Define a Spring Boot application. This annotation is a combination of @Configuration, @EnableAutoConfiguration, and @ComponentScan, 
+	which means that it can be used to create a Spring Boot application with minimal configuration.
+@EnableAutoConfiguration: Enable auto-configuration. This annotation tells Spring Boot to automatically configure the application based on the dependencies that are present in the classpath.
+@ComponentScan: Enable component scanning. This annotation tells Spring to scan for components, configurations, and services in the specified package and register them as beans in the application context.
+@Controller: Define a controller. A controller is a class that handles incoming HTTP requests and returns responses to the client.
+@RestController: Define a REST controller. A REST controller is a special type of controller that is used to create RESTful web services.
+	it is a combination of @Controller and @ResponseBody, which means that it can handle HTTP requests and return JSON or XML responses.
+@service: Define a service. A service is a class that provides a specific functionality and can be injected into other components or services.
+@Repository: Define a repository. A repository is a class that provides an abstraction over the data access layer, allowing you to interact with the database without having to write SQL queries.
+
+If we annotate a class service with @component instead of @service, it will still work because @service is a specialization of @component. 
+However, using @service is more semantically correct and makes it clear that the class is a service component. 
+It also allows for better organization and readability of the code, as it indicates the specific role of the class within the application.
+
+If we annotate a class repository with @component instead of @repository, it will still work because @repository is a specialization of @component.
+However, using @repository is more semantically correct and makes it clear that the class is a repository component.
+But using @repository also provides additional benefits, such as exception translation, which means that any exceptions 
+thrown by the underlying data access technology will be translated into Spring's DataAccessException hierarchy.
+
+@controller and @restcontroller are both used to define controllers in a Spring application, but they serve different purposes.
+@Controller is used to define a standard controller that handles HTTP requests and returns views (e.g., HTML pages).
+@RestController is a specialized version of @Controller that is used to create RESTful web services. 
+It combines the functionality of @Controller and @ResponseBody,and tells Spring to serialize the return value of the controller methods directly into the HTTP response body, typically in JSON or XML format.
+
+@configuration and @component are both used to define beans in a Spring application, but they serve different purposes.
+@Configuration is used to define a configuration class that contains bean definitions and other configuration settings for the application.
+@Component is a more general annotation that can be used to define any Spring-managed component, including services, repositories, and controllers.
+
+@profile: Define a profile. A profile is a way to group beans and configuration settings based on the environment or other criteria. 
+    For example, you can define a "dev" profile for development and a "prod" profile for production, and then use the @profile annotation to specify which beans should be active in each profile.
+    
+@autowired: Define a dependency injection point. This annotation tells Spring to inject a bean into the annotated field, constructor, or method. 
+    Spring will automatically find the appropriate bean based on the type and inject it into the class.
+    
+@qualifier: Define a qualifier for a bean. This annotation is used in conjunction with @autowired to specify which bean should be injected when there are multiple beans of the same type. 
+    You can use the @qualifier annotation to give each bean a unique name, and then use that name to specify which bean should be injected.
+    
+@Primary: Define a primary bean. This annotation is used to indicate that a bean should be given preference when multiple beans of the same type are present. 
+    When Spring encounters multiple beans of the same type, it will choose the one marked with @primary as the default bean to inject.
+
+@Secondary: Define a secondary bean. This annotation is used to indicate that a bean should be given lower priority when multiple beans of the same type are present. 
+    When Spring encounters multiple beans of the same type, it will choose the one marked with @primary as the default bean to inject, and the one marked with @secondary will be used as a fallback if the primary bean is not available.  
+@value: Define a value to be injected into a field or method parameter. This annotation is used to inject values from properties files, environment variables, or other sources into the application.
+
+@RequestMapping: Define a mapping for an HTTP request. This annotation is used to specify the URL path and HTTP method that a controller method should handle.
+@pathvariable: Define a path variable in a URL. This annotation is used to extract a variable from the URL and pass it as a parameter to a controller method.
+@requestparam: Define a request parameter. This annotation is used to extract a parameter from the query string of an HTTP request and pass it as a parameter to a controller method.
+@requestbody: Define a request body. This annotation is used to extract the body of an HTTP request and pass it as a parameter to a controller method.
+@responsebody: Define a response body. This annotation is used to indicate that the return value of a controller method should be serialized directly into the HTTP response body, typically in JSON or XML format.
+
+@exceptionhandler: Define an exception handler. This annotation is used to specify a method that should handle exceptions thrown by controller methods.
+@RestControllerAdvice: Define a controller advice. This annotation is used to specify a class that contains global exception handling and other cross-cutting concerns for controllers.
+
+@Entity: Define an entity. This annotation is used to specify that a class is an entity that should be mapped to a database table.
+@table: Define a table. This annotation is used to specify the name of the database table that an entity should be mapped to.
+@id: Define a primary key. This annotation is used to specify the primary key field of an entity.`
+@GeneratedValue: Define a generated value. This annotation is used to specify that the value of a primary key should be generated automatically by the database.
+@column: Define a column. This annotation is used to specify the name of the database column that a field should be mapped to.
+@transient: Define a transient field. This annotation is used to indicate that a field should not be persisted to the database.
+@lombok: Define a Lombok annotation. Lombok is a library that provides annotations to reduce boilerplate code in Java classes, such as getters, setters, constructors, and more.
+@data: Define a Lombok @Data annotation. This annotation generates getters, setters, toString, equals, and hashCode methods for a class.
+@builder: Define a Lombok @Builder annotation. This annotation generates a builder pattern for a class, allowing you to create instances of the class using a fluent API.
+@allargsconstructor: Define a Lombok @AllArgsConstructor annotation. This annotation generates a constructor with parameters for all fields in the class.
+@noargsconstructor: Define a Lombok @NoArgsConstructor annotation. This annotation generates a constructor with no parameters for the class.
+
+@oneof: Define a conditional bean. This annotation is used to specify that a bean should only be created if certain conditions are met, such as the presence of another bean or a specific property value.
+@conditional: Define a conditional bean. This annotation is used to specify that a bean should only be created if certain conditions are met, such as the presence of another bean or a specific property value.
+@onlyifbean: Define a conditional bean. This annotation is used to specify that a bean should only be created if a specific bean is present in the application context.
+@onlyifproperty: Define a conditional bean. This annotation is used to specify that a bean should only be created if a specific property has a certain value.
+@onlyifexpression: Define a conditional bean. This annotation is used to specify that a bean should only be created if a specific SpEL expression evaluates to true.
+
+@onetoone: Define a one-to-one relationship between two entities. This annotation is used to specify that each instance of one entity is associated with exactly one instance of another entity.
+@onetomany: Define a one-to-many relationship between two entities. This annotation is used to specify that each instance of one entity is associated with multiple instances of another entity.
+@manytoone: Define a many-to-one relationship between two entities. This annotation is used to specify that multiple instances of one entity are associated with a single instance of another entity.
+@manytomany: Define a many-to-many relationship between two entities. This annotation is used to specify that multiple instances of one entity are associated with multiple instances of another entity.
+@joincolumn: Define a join column. This annotation is used to specify the column that should be used to join two entities in a relationship.
+@joinTable: Define a join table. This annotation is used to specify the table that should be used to join two entities in a many-to-many relationship.
+@mappedBy: Define the owning side of a relationship. This annotation is used to specify which entity is the owner of a relationship in a bidirectional association.
+@JsonIgnore: Define a JSON ignore property. This annotation is used to indicate that a field should be ignored when serializing an object to JSON, preventing it from being included in the JSON output.
+@JsonManagedReference: Define a JSON managed reference. This annotation is used to indicate that a field is the parent side of a bidirectional relationship, allowing it to be serialized without causing infinite recursion.
+@JsonBackReference: Define a JSON back reference. This annotation is used to indicate that a field is the child side of a bidirectional relationship, preventing it from being serialized and causing infinite recursion.
+@
+
+@test: Define a test method. This annotation is used to indicate that a method is a test method that should be executed by the testing framework.
+@mock: Define a mock object. This annotation is used in testing to create a mock implementation of a class or interface, allowing you to simulate the behavior of dependencies in your tests.
+@injectMock: Define a mock injection point. This annotation is used in testing to specify where a mock object should be injected into the class being tested.
+@injectable: Define a class that can be injected into other classes. This is used for dependency injection.

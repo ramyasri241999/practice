@@ -4,7 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FlyweightExample {
-//Definition: Uses sharing to support large numbers of fine-grained objects efficiently.
+	/*Definition: Uses sharing to support large numbers of fine-grained objects efficiently.
+	 * Spring ex: Spring uses the Flyweight pattern to manage beans in the application context. 
+	 * When a bean is requested, Spring checks if an instance of that bean already exists in the context. 
+	 * If it does, Spring returns the existing instance instead of creating a new one. 
+	 * This allows Spring to efficiently manage memory and resources by sharing instances of beans across the application.
+	 * SpringBoot Ex: Spring Boot uses the Flyweight pattern to manage the configuration properties of the application.
+	*/
 	public static void main(String[] args) {
 		String document = "hello world";
 		int row = 1;

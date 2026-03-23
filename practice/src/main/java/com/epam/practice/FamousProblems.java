@@ -2,6 +2,18 @@ package com.epam.practice;
 
 import java.util.Arrays;
 public class FamousProblems {
+	
+	
+	public static void main(String[] args) {
+		FamousProblems fp = new FamousProblems();
+		int[] start = {1, 3, 0, 5, 8, 5};
+		int[] finish = {2, 4, 6, 7, 9, 9};
+		System.out.println(fp.activitySelection(start, finish));
+		
+		String str = "ABC";
+		System.out.println("Permutations of ABC:");
+		permute(str.toCharArray(), 0);
+	}
 
 	/*
 	 * Activity Selection Problem: Given start and finish times of activities, 
@@ -36,6 +48,35 @@ public class FamousProblems {
 
 	        return count; //return the count of selected activities
 	    }
+	
+	public static void permute(char[] arr, int index) {
+
+        // Base case
+        if (index == arr.length) {
+            System.out.println(new String(arr));
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+        	System.out.println("Permuting: " + new String(arr) + " at index: " + index + " with i: " + i);
+            // Swap
+            swap(arr, index, i);
+            System.out.println("After swap: " + new String(arr) + " at index: " + index + " with i: " + i);
+            // Recurse
+            permute(arr, index + 1);
+            System.out.println("Backtracking: " + new String(arr) + " at index: " + index + " with i: " + i);
+            // Backtrack
+            swap(arr, index, i);
+            System.out.println("After backtrack: " + new String(arr) + " at index: " + index + " with i: " + i);
+        }
+    }
+
+    private static void swap(char[] arr, int i, int j) {
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
 	}
 
 

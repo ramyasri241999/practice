@@ -1,0 +1,27 @@
+*******************Transaction***************************
+
+Transaction is a sequence of operations performed as a single logical unit of work. 
+A transaction must be atomic, consistent, isolated, and durable (ACID properties).
+
+transaction is a unit of work that is performed against a database. 
+It is a way to ensure that a series of operations are executed in a way that maintains the integrity of the database.
+
+Transactions are used to ensure that a series of operations are executed in a way that maintains the integrity of the database.
+
+@transactional is an annotation that can be applied to a method or a class to indicate that the method or class should be executed within a transaction. 
+When a method or class is annotated with @transactional, the framework will automatically start a transaction before the method is executed and commit the transaction after the method is executed.
+
+If an exception is thrown during the execution of the method, the transaction will be rolled back to ensure that the database remains in a consistent state.
+
+It creates a proxy around the annotated method or class, which manages the transaction lifecycle.
+
+If the class is implementing an interface, the proxy will be created using JDK dynamic proxies.
+If the class is not implementing an interface, the proxy will be created using CGLIB (Code Generation Library).
+
+Diff between JDK dynamic proxies and CGLIB proxies:
+1. JDK dynamic proxies can only proxy interfaces, while CGLIB can proxy classes.
+2. JDK dynamic proxies use reflection to invoke methods, 
+	while CGLIB generates bytecode to create a subclass of the target class and overrides the methods.
+3. JDK dynamic proxies are generally faster than CGLIB proxies because they use reflection,
+    while CGLIB proxies can be slower due to the overhead of generating bytecode and creating subclasses.
+

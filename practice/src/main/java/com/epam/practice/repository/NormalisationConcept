@@ -1,0 +1,127 @@
+******************************Normalisation concept**************************
+
+Normalisation is a database design technique that organizes tables in a way that reduces redundancy and dependency. 
+The main goal of normalisation is to ensure that each piece of data is stored in only one place, 
+which helps to maintain data integrity and makes it easier to update and manage the database.
+
+
+✔ Remove duplication
+✔ Avoid anomalies (insert/update/delete issues)
+✔ Maintain data integrity
+
+There are several normal forms (1NF, 2NF, 3NF, BCNF, etc.) that define different levels of normalisation.
+
+1NF (First Normal Form):
+- Each table has a primary key.
+- Each column contains atomic values (no repeating groups or arrays).
+
+Order Table (BAD DESIGN)
+
+OrderID | Customer | Items
+---------------------------------------
+1       | Ramya    | Pen, Book, Pencil
+2       | Sri      | Laptop.mouse
+
+Order Table (GOOD DESIGN - 1NF)  // Each item is stored in a separate row, and there are no repeating groups.
+
+OrderID | Customer | Item
+--------------------------------
+1       | Ramya    | Pen
+1       | Ramya    | Book
+1       | Ramya    | Pencil
+2       | Sri      | Laptop
+
+
+2NF (Second Normal Form):
+- It is in 1NF.
+- All non-key attributes are fully functional dependent on the primary key (no partial dependency).
+
+lets start with 1nf table and construct a 2nf table
+
+OrderID | ItemID | CustomerName | ItemName | Price
+--------------------------------------------------
+1       | 101    | Ramya        | Pen      | 10
+1       | 102    | Ramya        | Book     | 50
+2       | 103    | Sri          | Laptop   | 50000
+
+(OrderID, ItemID)  ← Composite Key
+
+If we observe the above table we can see that CustomerName is dependent on OrderID and ItemName, Price are dependent on ItemID.
+
+To convert this table to 2NF, we need to remove the partial dependencies. We can create two separate tables: one for Orders and another for Items.
+
+
+Orders Table (2NF)
+OrderID | CustomerName
+----------------------
+1       | Ramya
+2       | Sri
+
+Items Table (2NF)
+ItemID | ItemName | Price
+--------------------------------
+101    | Pen      | 10
+102    | Book     | 50
+103    | Laptop   | 50000
+
+OrderItems:
+OrderID | ItemID
+1       | 101
+1       | 102
+2       | 103
+
+
+Now the Orders table contains only the OrderID and CustomerName, which are fully dependent on the primary key (OrderID). 
+The Items table contains ItemID, ItemName, and Price, which are fully dependent on the primary key (ItemID). 
+This design eliminates partial dependencies and adheres to 2NF.
+
+
+why is it bad to maintain a partial dependency?
+1.Data Duplication: Ramya is repeated in the Orders table for each item she orders, which leads to data redundancy.
+2.Update Anomalies: If Ramya changes her name, we would need to update it in multiple rows in the Orders table, which can lead to inconsistencies if we miss any row.
+3.Insert Anomalies: If we want to add a new item for Ramya, we would need to insert a new row in the Orders table, which can lead to data duplication and inconsistency if we forget to include the correct CustomerName.
+4.2NF = split by "owns the data" (functional dependency)
+5.If primary key is single column, then 2NF is automatically satisfied. 
+If primary key is composite, then we need to check for partial dependencies.
+
+
+3NF (Third Normal Form):
+- It is in 2NF.
+- There are no transitive dependencies (non-key attributes should not depend on other non-key attributes).
+
+what is transitive dependency?
+	Transitive dependency occurs when a non-key attribute depends on another non-key attribute, which in turn depends on the primary key.
+	For example, if we have a table with the following attributes:
+	OrderId	| CustomerId | CustomerName | CustomerAddress
+	-------------------------------------------------------
+	 1      | 101        | Ramya        | 123 Street
+	 2      | 102        | Sri          | 456 Avenue
+	 
+	 In this case, CustomerName and CustomerAddress are dependent on CustomerId, which is a non-key attribute
+	 which is dependent on the primary key (OrderId). This creates a transitive dependency, as CustomerName and CustomerAddress are indirectly dependent on OrderId through CustomerId.
+	 To convert this table to 3NF, we need
+	 
+	 to remove the transitive dependency by creating a separate table for Customers.
+	 
+	 Orders Table (3NF)
+	 OrderId | CustomerId
+	 ----------------------
+	 1       | 101
+	 2       | 102
+	 
+	 Customers Table (3NF)
+	 CustomerId | CustomerName | CustomerAddress
+	 -----------------------------------------------
+	 101        | Ramya        | 123 Street
+	 102        | Sri          | 456 Avenue
+	 In this design, the Orders table contains only the OrderId and CustomerId, which are fully dependent on the primary key (OrderId).
+	 and the Customers table contains CustomerId, CustomerName, and CustomerAddress, which are fully dependent on the primary key (CustomerId).
+	 
+	 
+	 why transitive dependency is bad?
+	 1. Data Duplication: CustomerName and CustomerAddress are repeated for each order, leading to data redundancy.
+	 2. Update Anomalies: If a customer's name or address changes, we would need to update it in multiple rows in the Orders table, which can lead to inconsistencies if we miss any row.
+	 3. Insert Anomalies: If we want to add a new order for an existing customer, we would need to insert a new row in the Orders table, which can lead to data duplication and inconsistency if we forget to include the correct CustomerName and CustomerAddress.
+	 4.
+	 
+
