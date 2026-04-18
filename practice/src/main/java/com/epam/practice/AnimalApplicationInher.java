@@ -1,13 +1,15 @@
 package com.epam.practice;
 
-
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 public class AnimalApplicationInher {
 
 	
 	public static void main(String[] args) {
-		//SpringApplication.run(UserApplication.class,args);
+		
+		//SpringApplication.run(AnimalApplicationInher.class,args);
 		Animal a = new Animal();
 		System.out.println(a.legCount()); //4
 		a.sound(); // Animal Sound

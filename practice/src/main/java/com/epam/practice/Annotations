@@ -47,12 +47,12 @@ It combines the functionality of @Controller and @ResponseBody,and tells Spring 
 @value: Define a value to be injected into a field or method parameter. This annotation is used to inject values from properties files, environment variables, or other sources into the application.
 
 @RequestMapping: Define a mapping for an HTTP request. This annotation is used to specify the URL path and HTTP method that a controller method should handle.
-@pathvariable: Define a path variable in a URL. This annotation is used to extract a variable from the URL and pass it as a parameter to a controller method.
-@requestparam: Define a request parameter. This annotation is used to extract a parameter from the query string of an HTTP request and pass it as a parameter to a controller method.
-@requestbody: Define a request body. This annotation is used to extract the body of an HTTP request and pass it as a parameter to a controller method.
-@responsebody: Define a response body. This annotation is used to indicate that the return value of a controller method should be serialized directly into the HTTP response body, typically in JSON or XML format.
+@Pathvariable: Define a path variable in a URL. This annotation is used to extract a variable from the URL and pass it as a parameter to a controller method.
+@Requestparam: Define a request parameter. This annotation is used to extract a parameter from the query string of an HTTP request and pass it as a parameter to a controller method.
+@Requestbody: Define a request body. This annotation is used to extract the body of an HTTP request and pass it as a parameter to a controller method.
+@Responsebody: Define a response body. This annotation is used to indicate that the return value of a controller method should be serialized directly into the HTTP response body, typically in JSON or XML format.
 
-@exceptionhandler: Define an exception handler. This annotation is used to specify a method that should handle exceptions thrown by controller methods.
+@Exceptionhandler: Define an exception handler. This annotation is used to specify a method that should handle exceptions thrown by controller methods.
 @RestControllerAdvice: Define a controller advice. This annotation is used to specify a class that contains global exception handling and other cross-cutting concerns for controllers.
 
 @Entity: Define an entity. This annotation is used to specify that a class is an entity that should be mapped to a database table.

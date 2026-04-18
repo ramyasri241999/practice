@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: practice-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://100.55.90.129:8000/eureka/
+  instance:
+    hostname: localhost

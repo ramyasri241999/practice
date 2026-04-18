@@ -8,6 +8,13 @@ public class TypeSafetyExample {
 	
 	public static void main(String[] args) {
 		//withoutGenerics();
+		List<?> listWild = new ArrayList<>();
+		listWild.add(null); // we can add null to a list with wildcard type, but we cannot add any other type of object to it, because the compiler does not know what type of objects the list is supposed to hold, so it only allows null to be added to it.
+		//listwild.add(10); // compile error
+		//we can read from a list with wildcard type, but we cannot write to it, because the compiler does not know what type of objects the list is supposed to hold, so it only allows us to read objects of type Object from it.
+		
+	
+		
 		withGenerics();
 		Box<List<String>> box = new Box<>();
 		List<String> list = Arrays.asList("Hi","hello","welcome");

@@ -9,11 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.epam.practice.dto.Employee;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class PracticeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PracticeApplication.class, args);
+		//SpringApplication.run(PracticeApplication.class, args);
 		System.out.println("Hi");
 
 		//object related 
@@ -39,7 +39,7 @@ public class PracticeApplication {
 
 		empList.add(new Employee(10, "Shiva", 27, 147, "M","shiva@yahoo.com", "FINANCE", "Hyderabad", 2021));
 
-
+		
 		//Map<String,List<Employee>> city = empList.stream().collect(Collectors.groupingBy(Employee::getCity)); //output: Chennai = [Employee object] 
 		Map<String,List<String>> city= empList.stream().collect(Collectors.groupingBy(Employee::getCity,
 				Collectors.mapping(Employee::getName, Collectors.toList())));
@@ -48,9 +48,9 @@ public class PracticeApplication {
 
 		Map<String, Long> genderCount = empList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
 		System.out.println("genderCount "+genderCount); // genderCount {F=5, M=5}
-		Map<String,Map<String,Long>> cityGenderCount= empList.stream().collect(Collectors.groupingBy(Employee::getDeptName,
+		Map<String,Map<String,Long>> depGenderCount= empList.stream().collect(Collectors.groupingBy(Employee::getDeptName,
 				Collectors.groupingBy(Employee::getGender, Collectors.counting())));
-		System.out.println("cityGenderCount "+cityGenderCount); //cityGenderCount {FINANCE={M=1}, HR={F=3, M=1}, IT={F=2, M=3}}
+		System.out.println("depGenderCount "+depGenderCount); //cityGenderCount {FINANCE={M=1}, HR={F=3, M=1}, IT={F=2, M=3}}
 
 		int older = empList.stream().map(Employee::getYearOfJoining).sorted(Comparator.reverseOrder()).findFirst().orElse(-1);
 		System.out.println("older "+older); //2035
@@ -111,8 +111,9 @@ public class PracticeApplication {
 		String str="Ramya";
 		String sentence = "Ramya is a good girl but not a good girlfriend";
 		String[] splitSentence = sentence.trim().split("\\s+"); // for extra spaces like "Ramya    is good   girl" -- Ramya,sri,lakshmi,sunkara
-		
-		String distinct= str.chars().mapToObj(c->(char)c).distinct().map(String::valueOf).collect(Collectors.joining());
+		List<Integer> boxedCheck = str.chars().boxed().toList();
+		System.out.println(" boxedCheck "+ boxedCheck);
+		String distinct= str.chars().mapToObj(c->(char)c).distinct().map(String::valueOf).collect(Collectors.joining()); // why String::valueOf because we need to convert char to string to join them, if we directly use map(c->(char)c) then we will get a stream of characters and we cannot join them directly, we need to convert them to string first and then join them.
 		System.out.println("distinct string "+ distinct); //Ramy
 		Map<Character,Long> charCount = str.chars().mapToObj(c->(char)c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 		System.out.println(" charCount "+ charCount);// {a=2, R=1, y=1, m=1}
@@ -240,9 +241,9 @@ public class PracticeApplication {
 			};
 		
 		Map<String , Double> avgScore = Arrays.stream(scores).collect(Collectors.groupingBy(score -> score[0], Collectors.averagingInt(score -> Integer.parseInt(score[1]))));
-		System.out.println("avg score :: "+avgScore);
+		System.out.println("avg score :: "+avgScore); //avg score :: {Bobby=90.5, Charles=61.0, Eric=27.0, David=60.0}
 		int maxAvgScore = avgScore.values().stream().max(Double::compareTo).map(s-> (int)Math.floor(s)).orElse(0);
-		System.out.println(" max avg score :: "+maxAvgScore);
+		System.out.println(" max avg score :: "+maxAvgScore); // max avg score :: 90
 		String[] logs = {
 			    "192.168.1.10 - - [10/Jan/2026:10:01:10 +0530] \"GET /home HTTP/1.1\" 200",
 			    "192.168.1.11 - - [10/Jan/2026:10:01:20 +0530] \"GET /login HTTP/1.1\" 200",
@@ -300,10 +301,29 @@ public class PracticeApplication {
 		System.out.println("distinct numbers sum "+ distinctSum);
 		
 		String minPossibleNum =Arrays.stream(duplicateNums).mapToObj(String::valueOf).sorted((a,b)-> (a+b).compareTo(b+a)).collect(Collectors.joining());
-		System.out.println("min possible Num "+minPossibleNum);
+		System.out.println("min possible Num "+minPossibleNum);//23623456826  -- compare adjacent numbers by appending front and back like -- ex 23 and 6 then 236.compareTo 623 then we choose 236
 		
 		String maxPossibleNum =Arrays.stream(duplicateNums).mapToObj(String::valueOf).sorted((a,b)-> (b+a).compareTo(a+b)).collect(Collectors.joining());
-		System.out.println("max possible Num "+maxPossibleNum);
+		System.out.println("max possible Num "+maxPossibleNum); // 8632426235  -- compare adjacent numbers by appending front and back like -- ex 23 and 6 then 623.compareTo 236 then we choose 623
+		 
+		 int[] arr = {1,2,3,4,5};
+		 int sum = Arrays.stream(arr).sum();
+		 System.out.println("sum of array "+ sum); //15
+		 
+		 int product = Arrays.stream(arr).reduce(1,(a,b)-> a*b);
+		 System.out.println("product of array "+ product); //120
+		 
+		 int max = Arrays.stream(arr).max().orElse(Integer.MIN_VALUE);
+		 System.out.println("max of array "+ max); //5
+		 
+		 int min = Arrays.stream(arr).min().orElse(Integer.MAX_VALUE);
+		 System.out.println("min of array "+ min); //1
+		 
+		 long count1 = Arrays.stream(arr).count();
+		 System.out.println("count of array "+ count1); //5
+		 
+		 double average = Arrays.stream(arr).average().orElse(0.0);
+		 System.out.println("average of array "+ average); //3.0
 		
 		
 		//list stream
@@ -319,8 +339,50 @@ public class PracticeApplication {
 		
 		
 		
+		List<List<String>> sentences = List.of(List.of("The", "Java", "is", "fun"), List.of("Java", "is", "powerful", "and", "Java", "is", "fast"),
+				List.of("Coding", "in", "Java", "is", "fun"));
+				List<String> stop = List.of("the", "is", "and", "in");
+				
+		List<String> output  = sentences.stream().flatMap(List::stream).map(w->w.toLowerCase())
+	            .filter(w->!stop.contains(w))
+	            .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new,Collectors.counting()))
+	            .entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+	            .map(Map.Entry::getKey).limit(3).toList();
+	    System.out.println(output);
+	    
+	    /*
+	     * lets talk everything into FI
+	     */
+	    
+	    Predicate<String> isNotStopWord = w -> !stop.contains(w);
+	    Function<String, String> toLowerCase = String::toLowerCase;
+	    Comparator<Map.Entry<String, Long>> byCountDesc = Map.Entry.<String, Long> comparingByValue(Comparator.reverseOrder());
+	    
+	    sentences.stream()
+	        .flatMap(List::stream)
+	        .map(toLowerCase)
+	        .filter(isNotStopWord)
+	        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+	        .entrySet().stream()
+	        .sorted(byCountDesc)
+	        .map(Map.Entry::getKey)
+	        .limit(3)
+	        .toList();
+
+		Set<Integer> set = new HashSet<>();
+		
 		
 	}
+	
+	/*
+	 * name : trap
+	 * input : height = [0,1,0,2,1,0,1,3,2,1,2,1]
+	 * output : 6 (water trapped between 1 and 2 is 1, between 2 and 3 is 2 and between 3 and 2 is 3, total is 1+2+3 = 6)
+	 * explanation : we need to find the water trapped between the bars, we can use two pointers approach,
+	 *  we can start from both ends and move towards the center, we can keep track of the maximum height of the bars on both sides, 
+	 *  if the left bar is smaller than the right bar, then we can calculate the water trapped on the left side, 
+	 *  otherwise we can calculate the water trapped on the right side, we can keep doing this until the two pointers meet each other
+	 */
 	
 	public static int trap(int[] height) {  // water trap problem
 
@@ -361,7 +423,11 @@ public class PracticeApplication {
 	    return water;
 	}
 	
-	
+	/*
+	 * name : maximumGap
+	 * input : nums = [3, 6, 9, 1]
+	 * output : 3 (6-3 or 9-6) why not 9-1 because we need to find the maximum gap between the sorted elements not the unsorted elements
+	 */
 	public static int maximumGap(int[] nums) {
 	    if (nums == null || nums.length < 2) {
 	        return 0;
@@ -378,6 +444,11 @@ public class PracticeApplication {
 	    return maxGap;
 	}
 	
+	/*
+	 * name : nextHighestNumber
+	 * input : arr = [15, 10, 16, 20, 8, 9, 7, 50]
+	 * output : {15=16, 10=16, 16=20, 20=50, 8=9 , 9=50, 7=50, 50=-1}
+	 */
 	
 	public static void nextHighestNumber() {
 
@@ -400,6 +471,11 @@ public class PracticeApplication {
             result.put(stack.pop(), -1);
         }
 	}
+	/*
+	 * name : secondHighest
+	 * input : arr = [1, 7 ,5,6,9,8,10]
+	 * output : 9
+	 */
 	
 	 public static void secondHighest(){  //second highest
 	        
@@ -416,6 +492,11 @@ public class PracticeApplication {
 	        }
 	       System.out.println("second "+ second);
 	    }
+	 /*
+	  * name : findMin
+	  * input : nums = [3, 4, 5, 1, 2]
+	  * output : 1
+	  */
 	 
 	   public static int findMin(int[] nums) {  // minimum number in rotated array follow a binary search
 

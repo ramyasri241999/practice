@@ -31,3 +31,11 @@ public class OptionalJava9Example {
 			.forEach(System.out::println);
 	}
 }
+
+/*
+ * Unmodifiable Collections: Java 9 introduced new factory methods for creating unmodifiable collections, such as List.of(), Set.of(), and Map.of(). These methods allow you to create immutable collections with a concise syntax. For example:
+ * List<String> unmodifiableList = List.of("A", "B", "C");
+ * Set<String> unmodifiableSet = Set.of("X", "Y", "Z");
+ * Map<String, Integer> unmodifiableMap = Map.of("Key1", 1, "Key2", 2, "Key3", 3);
+ * 
+ */

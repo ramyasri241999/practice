@@ -1,4 +1,4 @@
-package com.epam.practice.coreJava;
+package com.epam.practice.java9features;
 
 import java.io.Closeable;
 

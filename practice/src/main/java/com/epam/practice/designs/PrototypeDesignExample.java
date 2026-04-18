@@ -8,7 +8,7 @@ public class PrototypeDesignExample {
 	public static void main(String[] args) throws CloneNotSupportedException {
 		Address address = new Address("city");
 		Contractor c1= new Contractor(1,"Ramya","IT",60, address);
-		
+		Contractor c3 = new Contractor(c1);  // using copy constructor
 		Contractor c2 = (Contractor) c1.clone();  //shallow copy
 		c2.setName("lakshmi");
 		c2.getAddress().setCity("Hyderabad");

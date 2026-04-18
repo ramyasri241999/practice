@@ -21,6 +21,7 @@ public class FamousProblems {
 	 * assuming that a person can only work on a single activity at a time.
 	 * input: start = [1, 3, 0, 5, 8, 5], finish = [2, 4, 6, 7, 9, 9]
 	 * output: 4 (activities at indices 0, 1, 3, and 4 can be selected)
+	 * This follows the greedy approach where we sort the activities based on their finish times and then select the activities that finish first. We keep track of the last selected activity's finish time and compare it with the start time of the next activity to decide whether to select it or not.
 	 */
 	public  int activitySelection(int[] start, int[] finish) {
 

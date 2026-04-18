@@ -29,7 +29,7 @@ public class FactoryDesignExample {
 		square.draw();
 		
 		//enum implementation
-		Shape circle1 = ShapeType.CIRCLE.create();
+		Shape circle1 = ShapefactoryEnum.CIRCLE.create();
 	}
 }
 
@@ -104,14 +104,14 @@ public class FactoryDesignExample {
 	
 	
 	//Advanced level factory design pattern using enum and functional interface to avoid switch case and if else statements, this is more scalable and maintainable as we can easily add new shapes without modifying the existing code.
-	 enum ShapeType {
+	 enum ShapefactoryEnum {
 	    CIRCLE(Circle::new),
 	    RECTANGLE(Rectangle::new),
 	    SQUARE(Square::new);
 
 	    private final Supplier<Shape> constructor;
 
-	    ShapeType(Supplier<Shape> constructor) {
+	    ShapefactoryEnum(Supplier<Shape> constructor) {
 	        this.constructor = constructor;
 	    }
 

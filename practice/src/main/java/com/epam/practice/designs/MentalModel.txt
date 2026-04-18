@@ -19,15 +19,19 @@ Singleton	Only one instance
 
 Example mapping in real Java:
 
-Singleton → Logger, Spring Beans
-Builder → StringBuilder, Lombok @Builder
-Factory → Spring BeanFactory
-Prototype → clone()
-Abstract Factory → UI theme libraries
+Singleton → Logger, Spring Beans  					enum
+Builder → StringBuilder, Lombok @Builder			pojo- constructor with builder
+Factory → Spring BeanFactory						shape	
+Prototype → clone()									clone
+Abstract Factory → UI theme libraries				shape and color factories.
 
 Visual idea:
 
 Client → Factory → Object
+
+
+
+
 2️⃣ Structural Patterns (7)
 
 Goal: How objects are combined to form larger structures
