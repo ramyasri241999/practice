@@ -104,6 +104,14 @@ public class PracticeApplication {
 		Map<String,List<String>> GroupEmailNames = empList.stream().collect(Collectors.groupingBy(emp -> emp.getEmail().substring(emp.getEmail().indexOf('@')+1),Collectors.mapping(Employee::getName, Collectors.toList())));
 		System.out.println("Group emails names "+ GroupEmailNames); //Group emails {outlook.com=[Melanie, Ali], gmail.com=[Yanksha, Ramesh, Padma, Uzma, Ram], yahoo.com=[Francesca, Milad, Shiva]}
 		
+		// compute the average salary for those cities having more than 2 employees using parallel streams.
+		Map<String, Double> avgSalaryWithNulls = empList.parallelStream().collect(Collectors.groupingBy(Employee::getCity,
+		Collectors.collectingAndThen(Collectors.toList(), 
+				list-> list.size()>1 ? list.stream().mapToDouble(Employee::getSalary).average().orElse(0) : null)));
+		System.out.println("Avg with nulls "+avgSalaryWithNulls);
+		
+		Map<String, Double> avgSalaryWithoutNull = avgSalaryWithNulls.entrySet().stream().filter(e->e.getValue()!= null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		System.out.println("Avg without nulls "+avgSalaryWithoutNull);
 		
 		
 		
@@ -372,6 +380,7 @@ public class PracticeApplication {
 		Set<Integer> set = new HashSet<>();
 		
 		
+		
 	}
 	
 	/*
@@ -549,6 +558,6 @@ public class PracticeApplication {
 	        return new int[]{x, y};
 	    }
 
-
+	   
  
 }
